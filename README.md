@@ -27,7 +27,7 @@ Northwood Regional Health is a fictional regional healthcare network consisting 
 |---|---|
 | Hypervisor | VirtualBox |
 | Domain Controller OS | Windows Server 2022 (Desktop Experience) |
-| Domain name | northwoodhealth.local |
+| Domain name | northwood.local (NetBIOS: NORTHWOOD) |
 | DC hostname | NW-DC01 |
 | Networking | Bridged Adapter (NW-DC01 connects directly to the physical home network) |
 
@@ -46,7 +46,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 ## What Was Built
 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
-- [ ] Phase 2: AD DS Promotion (northwoodhealth.local)
+- [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
 - [ ] Phase 3: OU structure created (Clinical, Administration, IT, Facilities)
 - [ ] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
 - [ ] Phase 5: GPOs applied and scoped per OU
@@ -62,7 +62,12 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 
 ## Screenshots
 
-*(To be added as each phase is completed — e.g. DC promotion success screen, AD Users and Computers OU view, gpresult output.)*
+Screenshots for each phase are stored in [`screenshots/`](screenshots/) and embedded in the phase docs.
+
+| Phase | Highlights |
+|---|---|
+| 1 | VM configuration and network setup — see [Phase 1](docs/phase1-vm-setup.md) |
+| 2 | AD DS role installed, `Get-ADDomain` verification, DNS SRV record check, NW-DC01 in Domain Controllers — see [Phase 2](docs/phase2-adds-promotion.md#screenshots) |
 
 ## Troubleshooting Log
 
@@ -72,4 +77,7 @@ Full details for each issue are documented in their respective phase docs. Summa
 |---|---|---|
 | 1 | VirtualBox Network settings only showed NAT and Bridged Adapter — Internal Network option missing | VirtualBox 7.x hides advanced networking options behind an **Expert mode** toggle in the Settings window (Basic mode was active by default). Switched to Expert mode to reveal the full adapter list. |
 
-See [Phase 1: VM Setup](docs/phase1-vm-setup.md#troubleshooting) for the full write-up.
+| 2 | `Resolve-DnsName` prompted for `Name` instead of running | The name argument was lost when entering the command; reran it on one line with an explicit `-Name` parameter. |
+| 2 | Host ↔ VM shared clipboard not working after installing Guest Additions | Unresolved. `VBoxService` and `VBoxTray` confirmed running and clipboard set to Bidirectional. Workaround: type commands manually and capture screenshots from the host. |
+
+See [Phase 1: VM Setup](docs/phase1-vm-setup.md#troubleshooting) and [Phase 2: AD DS Promotion](docs/phase2-adds-promotion.md#troubleshooting-notes) for the full write-ups.

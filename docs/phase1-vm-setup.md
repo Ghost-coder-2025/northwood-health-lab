@@ -75,6 +75,22 @@ Since the VM uses Bridged Adapter (directly on the home network), NW-DC01 must f
 
 ---
 
+## Screenshots
+
+**VM hardware specs**
+![VM hardware specs](../screenshots/phase1-vm-details/hardware-specs.png)
+
+**VirtualBox network settings (Bridged Adapter)**
+![VirtualBox network settings](../screenshots/phase1-vm-details/network-settings.png)
+
+**Static IP and DNS configuration**
+![Static IP and DNS settings](../screenshots/phase1-vm-details/DNS-serv_static-addr.png)
+
+**Connectivity test (gateway ping)**
+![Gateway ping succeeding](../screenshots/phase1-vm-details/proof-network-works.png)
+
+---
+
 ## Troubleshooting
 
 ### Issue: VirtualBox Network settings only showed NAT and Bridged Adapter

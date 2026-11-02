@@ -134,16 +134,16 @@ Installed to enable a shared clipboard between host and VM, plus better display 
 ## Screenshots
 
 **AD DS role installed**
-![AD DS role installed](images/phase2/01-adds-role-installed.png)
+![AD DS role installed](../screenshots/phase2-adds-promotion/adds-role.png)
 
 **Domain verification (Get-ADDomain)**
-![Get-ADDomain output](images/phase2/02-get-addomain.png)
+![Get-ADDomain output](../screenshots/phase2-adds-promotion/get-addomain.png)
 
 **DNS SRV record check**
-![DNS SRV record](images/phase2/03-dns-srv-record.png)
+![DNS SRV record](../screenshots/phase2-adds-promotion/dns-srv-record.png)
 
 **Active Directory Users and Computers – Domain Controllers**
-![ADUC showing NW-DC01 in Domain Controllers](images/phase2/04-aduc-domain-controllers.png)
+![ADUC showing NW-DC01 in Domain Controllers](../screenshots/phase2-adds-promotion/aduc-domain-controllers.png)
 
 ---
 
