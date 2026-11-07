@@ -47,7 +47,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
 - [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
-- [x] Phase 3: OU structure created (Clinical, Administration, IT, Facilities)
+- [x] [Phase 3: OU structure created (Clinical, Administration, IT, Facilities)](docs/phase3-ou-structure.md)
 - [ ] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
 - [ ] Phase 5: GPOs applied and scoped per OU
 - [ ] Configuration and troubleshooting documented throughout
@@ -55,7 +55,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 ## Skills Demonstrated
 
 - Active Directory Domain Services (AD DS) deployment and administration
-- OU design and delegation
+- OU design
 - PowerShell scripting (bulk user provisioning)
 - Group Policy Object (GPO) creation and management
 - Technical documentation
@@ -68,6 +68,7 @@ Screenshots for each phase are stored in [`screenshots/`](screenshots/) and embe
 |---|---|
 | 1 | VM configuration and network setup — see [Phase 1](docs/phase1-vm-setup.md) |
 | 2 | AD DS role installed, `Get-ADDomain` verification, DNS SRV record check, NW-DC01 in Domain Controllers — see [Phase 2](docs/phase2-adds-promotion.md#screenshots) |
+| 3 | Northwood OU tree in ADUC, all OUs protected from accidental deletion — see [Phase 3](docs/phase3-ou-structure.md#screenshots) |
 
 ## Troubleshooting Log
 
@@ -76,8 +77,9 @@ Full details for each issue are documented in their respective phase docs. Summa
 | Phase | Issue | Fix |
 |---|---|---|
 | 1 | VirtualBox Network settings only showed NAT and Bridged Adapter — Internal Network option missing | VirtualBox 7.x hides advanced networking options behind an **Expert mode** toggle in the Settings window (Basic mode was active by default). Switched to Expert mode to reveal the full adapter list. |
-
 | 2 | `Resolve-DnsName` prompted for `Name` instead of running | The name argument was lost when entering the command; reran it on one line with an explicit `-Name` parameter. |
 | 2 | Host ↔ VM shared clipboard not working after installing Guest Additions | Unresolved. `VBoxService` and `VBoxTray` confirmed running and clipboard set to Bidirectional. Workaround: type commands manually and capture screenshots from the host. |
+| 3 | Delete still blocked after removing OU protection | A typo meant the command never applied; confirmed with `Get-ADOrganizationalUnit -Properties` (still `True`) and reran it correctly. |
+| 3 | `A positional parameter cannot be found that accepts argument '-'` | Space between the dash and the parameter (`- Properties`); parameter names attach directly to the dash. |
 
-See [Phase 1: VM Setup](docs/phase1-vm-setup.md#troubleshooting) and [Phase 2: AD DS Promotion](docs/phase2-adds-promotion.md#troubleshooting-notes) for the full write-ups.
+See [Phase 1](docs/phase1-vm-setup.md#troubleshooting), [Phase 2](docs/phase2-adds-promotion.md#troubleshooting-notes), and [Phase 3](docs/phase3-ou-structure.md#troubleshooting-notes) for the full write-ups.
