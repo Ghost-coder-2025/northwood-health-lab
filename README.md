@@ -47,7 +47,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
 - [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
-- [ ] Phase 3: OU structure created (Clinical, Administration, IT, Facilities)
+- [x] Phase 3: OU structure created (Clinical, Administration, IT, Facilities)
 - [ ] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
 - [ ] Phase 5: GPOs applied and scoped per OU
 - [ ] Configuration and troubleshooting documented throughout
