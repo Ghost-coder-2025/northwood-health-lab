@@ -48,17 +48,24 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
 - [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
 - [x] [Phase 3: OU structure created (Clinical, Administration, IT, Facilities)](docs/phase3-ou-structure.md)
-- [x] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
+- [x] [Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments](docs/phase4-users-groups.md)
+   - Script: [`scripts/create-users.ps1`](scripts/create-users.ps1) · Data: [`scripts/users.csv`](scripts/users.csv)
 - [ ] Phase 5: GPOs applied and scoped per OU
 - [ ] Configuration and troubleshooting documented throughout
 
 ## Skills Demonstrated
 
-- Active Directory Domain Services (AD DS) deployment and administration
-- OU design
-- PowerShell scripting (bulk user provisioning)
-- Group Policy Object (GPO) creation and management
-- Technical documentation
+| Skill | What I did | Where |
+|---|---|---|
+| Windows Server administration | Installed and configured Windows Server 2022 in VirtualBox with a static IP and self-referencing DNS | [Phase 1](docs/phase1-vm-setup.md) |
+| Active Directory deployment | Promoted a server to the first domain controller of a new forest (`northwood.local`) with `Install-ADDSForest` | [Phase 2](docs/phase2-adds-promotion.md) |
+| DNS | Verified AD service records (SRV) so clients can locate the domain controller | [Phase 2](docs/phase2-adds-promotion.md) |
+| OU design | Built a department-based OU structure with accidental-deletion protection | [Phase 3](docs/phase3-ou-structure.md) |
+| User and group management | Created users and security groups, managed membership, moved and cleaned up AD objects | [Phase 4](docs/phase4-users-groups.md) |
+| PowerShell automation | Bulk-provisioned 45 users from a CSV, with duplicate handling, safe reruns, `-WhatIf` previews, and `try`/`catch` error reporting | [Phase 4](docs/phase4-users-groups.md), [`create-users.ps1`](scripts/create-users.ps1) |
+| Account standards | Applied a `first.last` naming convention, unique-name rules, the 20-character logon limit, and change-password-at-first-logon | [Phase 4](docs/phase4-users-groups.md) |
+| Troubleshooting | Diagnosed failures from error messages and verified every result instead of assuming success | Troubleshooting Log below |
+| Documentation and version control | Documented each phase in Markdown with screenshots, managed with Git and GitHub | This repo |
 
 ## Screenshots
 
