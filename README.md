@@ -48,7 +48,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
 - [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
 - [x] [Phase 3: OU structure created (Clinical, Administration, IT, Facilities)](docs/phase3-ou-structure.md)
-- [ ] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
+- [x] Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments
 - [ ] Phase 5: GPOs applied and scoped per OU
 - [ ] Configuration and troubleshooting documented throughout
 
@@ -69,6 +69,7 @@ Screenshots for each phase are stored in [`screenshots/`](screenshots/) and embe
 | 1 | VM configuration and network setup — see [Phase 1](docs/phase1-vm-setup.md) |
 | 2 | AD DS role installed, `Get-ADDomain` verification, DNS SRV record check, NW-DC01 in Domain Controllers — see [Phase 2](docs/phase2-adds-promotion.md#screenshots) |
 | 3 | Northwood OU tree in ADUC, all OUs protected from accidental deletion — see [Phase 3](docs/phase3-ou-structure.md#screenshots) |
+| 4 | Script output (41 created, 3 skipped, 0 failed), user and group counts, Clinical OU in ADUC — see [Phase 4](docs/phase4-users-groups.md#screenshots) |
 
 ## Troubleshooting Log
 
@@ -81,5 +82,7 @@ Full details for each issue are documented in their respective phase docs. Summa
 | 2 | Host ↔ VM shared clipboard not working after installing Guest Additions | Unresolved. `VBoxService` and `VBoxTray` confirmed running and clipboard set to Bidirectional. Workaround: type commands manually and capture screenshots from the host. |
 | 3 | Delete still blocked after removing OU protection | A typo meant the command never applied; confirmed with `Get-ADOrganizationalUnit -Properties` (still `True`) and reran it correctly. |
 | 3 | `A positional parameter cannot be found that accepts argument '-'` | Space between the dash and the parameter (`- Properties`); parameter names attach directly to the dash. |
+| 4 | Misspelled property (`Departtment`) produced the group name `' Staff'` | PowerShell treats unknown properties as empty instead of erroring; fixed the spelling. |
+| 4 | 41 users failed on password complexity, leaving disabled accounts behind | Removed the half-created accounts with `Remove-ADUser` (previewed with `-WhatIf` first) and reran with a compliant password. |
 
-See [Phase 1](docs/phase1-vm-setup.md#troubleshooting), [Phase 2](docs/phase2-adds-promotion.md#troubleshooting-notes), and [Phase 3](docs/phase3-ou-structure.md#troubleshooting-notes) for the full write-ups.
+See [Phase 1](docs/phase1-vm-setup.md#troubleshooting), [Phase 2](docs/phase2-adds-promotion.md#troubleshooting-notes), [Phase 3](docs/phase3-ou-structure.md#troubleshooting-notes), and [Phase 4](docs/phase4-users-groups.md#troubleshooting-notes) for the full write-ups.

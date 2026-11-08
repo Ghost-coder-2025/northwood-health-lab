@@ -1,0 +1,45 @@
+EmployeeID,FirstName,LastName,Department,Title
+1001,Maria,Lopez,Clinical,Registered Nurse
+1002,James,Carter,Clinical,Registered Nurse
+1003,Aisha,Mohamed,Clinical,Registered Nurse
+1004,Daniel,Kim,Clinical,Licensed Practical Nurse
+1005,Emily,Nguyen,Clinical,Licensed Practical Nurse
+1006,Robert,Wilson,Clinical,Physician
+1007,Priya,Patel,Clinical,Physician
+1008,Michael,Brown,Clinical,Physician
+1009,Laura,Schmidt,Clinical,Radiology Technician
+1010,Kevin,Olson,Clinical,Radiology Technician
+1011,Fatima,Hassan,Clinical,Lab Technician
+1012,Brian,Anderson,Clinical,Lab Technician
+1013,Grace,Lee,Clinical,Registered Nurse
+1014,Alexandria,Montgomery,Clinical,Registered Nurse
+1015,Omar,Ali,Clinical,Licensed Practical Nurse
+1016,Hannah,Peterson,Clinical,Diagnostics Technician
+1017,Carlos,Rivera,Clinical,Physician
+1018,Megan,Larson,Clinical,Registered Nurse
+2001,Jennifer,Thompson,Administration,HR Manager
+2002,David,Martinez,Administration,HR Specialist
+2003,Ashley,Johnson,Administration,Billing Specialist
+2004,Ahmed,Abdi,Administration,Medical Coder
+2005,Rachel,Green,Administration,Medical Coder
+2006,Thomas,Miller,Administration,Front Desk Coordinator
+2007,Sofia,Hernandez,Administration,Scheduling Coordinator
+2008,Mark,Davis,Administration,Chief Executive Officer
+2009,Linda,Moore,Administration,Chief Financial Officer
+2010,Nicole,Taylor,Administration,Front Desk Coordinator
+2011,Jason,White,Administration,Billing Specialist
+2012,Samantha,Clark,Administration,Scheduling Coordinator
+3001,Ryan,Walker,IT,Help Desk Technician
+3002,Amina,Yusuf,IT,Help Desk Technician
+3003,Eric,Hall,IT,Systems Administrator
+3004,Jessica,Young,IT,Network Administrator
+3005,Tyler,King,IT,Help Desk Technician
+3006,Michael,Brown,IT,IT Manager
+4001,Steven,Wright,Facilities,Maintenance Technician
+4002,Patricia,Scott,Facilities,Maintenance Technician
+4003,Hassan,Ibrahim,Facilities,Custodian
+4004,Angela,Adams,Facilities,Custodian
+4005,Christopher,Baker,Facilities,Security Officer
+4006,Joseph,Nelson,Facilities,Security Officer
+4007,Karen,Hill,Facilities,Groundskeeper
+4008,Paul,Mitchell,Facilities,Facilities Manager
