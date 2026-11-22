@@ -10,17 +10,17 @@ Northwood Regional Health is a **fictional organization** created solely for thi
 
 ## Organization Profile
 
-Northwood Regional Health is a fictional healthcare organization with one main hospital, two satellite clinics, and about 350 staff.
+Northwood Regional Health is a fictional healthcare organization with one main hospital, two satellite clinics, and 350 staff. This lab builds its core IT environment:
 
-This lab builds a scaled-down version of Northwood's IT environment. It keeps the real structure but uses a smaller number of accounts:
-
-| | Full organization | Built in this lab |
-|---|---|---|
-| Staff accounts | ~350 | 45 (a sample from every department) |
-| Departments | 4 | 4 OUs with a security group each |
-| Domain controllers | — | 1 (NW-DC01) |
-| Staff computers | — | 1 (NW-CL01, a Clinical workstation) |
-| Group Policy | — | 2 GPOs: a login banner for all staff, a screen lock for Clinical |
+| Component | Built |
+|---|---|
+| Domain controller | NW-DC01 (Windows Server 2022) |
+| Domain | northwood.local |
+| Staff accounts | 350, created with a PowerShell script from a CSV |
+| Departments | 4 OUs: Clinical, Administration, IT, Facilities |
+| Security groups | 4, one per department |
+| Staff workstation | NW-CL01 (Windows 11 Enterprise, Clinical) |
+| Group Policy | Login banner for all staff; 5-minute screen lock for Clinical |
 
 The design reflects the access controls a HIPAA-adjacent healthcare organization would need.
 
@@ -45,9 +45,9 @@ The design reflects the access controls a HIPAA-adjacent healthcare organization
 |---|---|---|---|
 | **Home router** | The network's gateway | Connects the lab to the internet | 192.168.12.1 |
 | **NW-DC01** | Windows Server 2022 | Domain controller and DNS server for `northwood.local`. Stores all accounts and sends out Group Policy | 192.168.12.50 (static) |
-| **NW-CL01** | Windows 11 Enterprise | A staff workstation (a nurse-station PC) joined to the domain | Assigned on the home network; DNS points to NW-DC01 |
-| **Active Directory** | The account database on NW-DC01 | Holds 45 users and 4 security groups, organized into department OUs | — |
-| **Group Policy** | Rules linked to OUs | Login banner for all of Northwood; 5-minute screen lock for Clinical | — |
+| **NW-CL01** | Windows 11 Enterprise | A staff workstation (a nurse-station PC) joined to the domain | On the home network; DNS points to NW-DC01 |
+| **Active Directory** | The account database on NW-DC01 | Holds 351 user accounts and 4 security groups, organized into department OUs | Runs on NW-DC01 |
+| **Group Policy** | Rules linked to OUs | Login banner for all of Northwood; 5-minute screen lock for Clinical | Sent from NW-DC01 |
 
 ### How a staff login works
 
@@ -60,13 +60,15 @@ The design reflects the access controls a HIPAA-adjacent healthcare organization
 ```
 northwood.local                      ← the domain
 └── Northwood                        ← top-level OU (Login Banner GPO linked here)
-    ├── Administration   12 users    Administration Staff group
-    ├── Clinical         19 users    Clinical Staff group + NW-CL01 (Screen Lock GPO linked here)
-    ├── Facilities        8 users    Facilities Staff group
-    └── IT                6 users    IT Staff group
+    ├── Administration   80 users    Administration Staff group
+    ├── Clinical        181 users    Clinical Staff group + NW-CL01 (Screen Lock GPO linked here)
+    ├── Facilities       65 users    Facilities Staff group
+    └── IT               25 users    IT Staff group
 ```
 
 Rules linked to an OU apply to everything **underneath** it, so the login banner reaches every department, while the screen lock applies only to Clinical.
+
+351 accounts = the 350 staff created by script, plus one account created by hand while learning the process.
 
 ## Lab Environment / Tech Stack
 
@@ -98,7 +100,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 - [x] [Phase 1: VM Setup & Networking](docs/phase1-vm-setup.md)
 - [x] [Phase 2: AD DS Promotion (northwood.local)](docs/phase2-adds-promotion.md)
 - [x] [Phase 3: OU structure created (Clinical, Administration, IT, Facilities)](docs/phase3-ou-structure.md)
-- [x] [Phase 4: Sample user accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments](docs/phase4-users-groups.md)
+- [x] [Phase 4: 350 staff accounts bulk-provisioned via PowerShell/CSV, security groups mapped to departments](docs/phase4-users-groups.md)
    - Script: [`scripts/create-users.ps1`](scripts/create-users.ps1) · Data: [`scripts/users.csv`](scripts/users.csv)
 - [x] [Phase 5: Windows 11 client joined to the domain; GPOs applied and scoped per OU](docs/phase5-client-gpo.md)
 - [x] Configuration and troubleshooting documented throughout
@@ -112,7 +114,7 @@ See [Phase 1: VM Setup](docs/phase1-vm-setup.md) for full configuration details 
 | DNS | Verified AD service records (SRV) so clients can locate the domain controller | [Phase 2](docs/phase2-adds-promotion.md) |
 | OU design | Built a department-based OU structure with accidental-deletion protection | [Phase 3](docs/phase3-ou-structure.md) |
 | User and group management | Created users and security groups, managed membership, moved and cleaned up AD objects | [Phase 4](docs/phase4-users-groups.md) |
-| PowerShell automation | Bulk-provisioned 45 users from a CSV, with duplicate handling, safe reruns, `-WhatIf` previews, and `try`/`catch` error reporting | [Phase 4](docs/phase4-users-groups.md), [`create-users.ps1`](scripts/create-users.ps1) |
+| PowerShell automation | Bulk-provisioned 350 users from a CSV, with duplicate handling, safe reruns, `-WhatIf` previews, and `try`/`catch` error reporting | [Phase 4](docs/phase4-users-groups.md), [`create-users.ps1`](scripts/create-users.ps1) |
 | Account standards | Applied a `first.last` naming convention, unique-name rules, the 20-character logon limit, and change-password-at-first-logon | [Phase 4](docs/phase4-users-groups.md) |
 | Workstation setup | Built a Windows 11 client, pointed DNS at the DC, joined it to the domain, and signed in as a domain user | [Phase 5](docs/phase5-client-gpo.md) |
 | Group Policy | Created and linked a login banner GPO (Northwood OU) and a screen-lock GPO (Clinical OU); verified with `gpupdate` and `gpresult` | [Phase 5](docs/phase5-client-gpo.md) |
@@ -128,7 +130,7 @@ Screenshots for each phase are stored in [`screenshots/`](screenshots/) and embe
 | 1 | VM configuration and network setup — see [Phase 1](docs/phase1-vm-setup.md) |
 | 2 | AD DS role installed, `Get-ADDomain` verification, DNS SRV record check, NW-DC01 in Domain Controllers — see [Phase 2](docs/phase2-adds-promotion.md#screenshots) |
 | 3 | Northwood OU tree in ADUC, all OUs protected from accidental deletion — see [Phase 3](docs/phase3-ou-structure.md#screenshots) |
-| 4 | Script output (41 created, 3 skipped, 0 failed), user and group counts, Clinical OU in ADUC — see [Phase 4](docs/phase4-users-groups.md#screenshots) |
+| 4 | Script output, 351 users and group counts, Clinical OU in ADUC — see [Phase 4](docs/phase4-users-groups.md#screenshots) |
 | 5 | Client DNS and domain join, GPO links, `gpresult` showing applied GPOs, login banner — see [Phase 5](docs/phase5-client-gpo.md#screenshots) |
 
 ## Troubleshooting Log

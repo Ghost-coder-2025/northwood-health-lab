@@ -10,15 +10,15 @@
 
 | Item | Count |
 |---|---|
-| Users created | 45 (1 by hand, 3 with PowerShell one-liners, 41 by script) |
+| Users created | 351 (350 staff by script, plus 1 created by hand while learning the process) |
 | Security groups | 4: Clinical Staff, Administration Staff, IT Staff, Facilities Staff |
 
 | Group | Members |
 |---|---|
-| Clinical Staff | 19 |
-| Administration Staff | 12 |
-| IT Staff | 6 |
-| Facilities Staff | 8 |
+| Clinical Staff | 181 |
+| Administration Staff | 80 |
+| IT Staff | 25 |
+| Facilities Staff | 65 |
 
 Script and data: [`scripts/create-users.ps1`](../scripts/create-users.ps1) and [`scripts/users.csv`](../scripts/users.csv)
 
@@ -93,7 +93,7 @@ Created `C:\Scripts\test-users.csv` and built the script one piece at a time:
 | `try` / `catch` with `-ErrorAction Stop` | Every failure prints **FAILED** with the reason instead of failing silently |
 | CREATED / SKIP / FAILED line per user, plus totals | Shows exactly what happened |
 
-### 4. Run it on NW-DC01
+### 4. First run: 44-person CSV
 
 Files were written in VS Code on the host, shared to the VM with a VirtualBox shared folder (read-only, auto-mount), and copied to `C:\Scripts` before running.
 
@@ -104,19 +104,26 @@ cd C:\Scripts
 
 **Result:** `Done. Created: 41 Skipped: 3 Failed: 0`
 
-### 5. Verify
+### 5. Expand to the full 350-person staff
+
+Expanded `users.csv` from 44 to 350 staff (Clinical 180, Administration 80, Facilities 65, IT 25), keeping the original 44 rows and EmployeeIDs unchanged. Reran the same script with no code changes:
+
+**Result:** `Done. Created: 306 Skipped: 44 Failed: 0`
+
+
+### 6. Verify
 
 ```powershell
 Get-ADUser -Filter * -SearchBase "OU=Northwood,DC=northwood,DC=local" | Measure-Object
 ```
 
-**Result:** ✅ 45 users
+**Result:** ✅ 351 users
 
 ```powershell
 Get-ADGroup -Filter "Name -like '* Staff'" | ForEach-Object { "$($_.Name): $((Get-ADGroupMember $_).Count)" }
 ```
 
-**Result:** ✅ Clinical 19, Administration 12, IT 6, Facilities 8
+**Result:** ✅ Clinical 181, Administration 80, IT 25, Facilities 65
 
 ```powershell
 Get-ADUser -Filter "Surname -eq 'Montgomery'" | Select-Object Name, SamAccountName, UserPrincipalName
@@ -145,11 +152,12 @@ Get-ADUser -Filter "Surname -eq 'Montgomery'" | Select-Object Name, SamAccountNa
 
 ## Screenshots
 
-**Script output**
+**First run (44-person CSV)**
 ![Script output showing CREATED, SKIP, and the summary line](../screenshots/phase4-users-groups/script-output.png)
 
+
 **User count**
-![45 users in the Northwood OU](../screenshots/phase4-users-groups/user-count.png)
+![351 users in the Northwood OU](../screenshots/phase4-users-groups/user-count.png)
 
 **Group member counts**
 ![Member counts for each department group](../screenshots/phase4-users-groups/group-counts.png)
@@ -161,4 +169,4 @@ Get-ADUser -Filter "Surname -eq 'Montgomery'" | Select-Object Name, SamAccountNa
 
 ## Next: Phase 5
 
-Create GPOs and link them to the department OUs, such as password and screen-lock policies for Clinical.
+Create GPOs and link them to the department OUs, such as a login banner and a screen-lock policy for Clinical.
